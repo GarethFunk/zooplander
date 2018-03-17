@@ -43,7 +43,7 @@ LastYearTransactions=df[df['Date']>=pd.datetime(MostRecentDate.year-1,MostRecent
 
 #Calculate the delta in balance over last year for each account
 Incomes=np.zeros((Number_of_accounts,1),dtype='double')
-for i in range(Number_of_accounts+1):
+for i in range(1,Number_of_accounts+1):
     Incomes[i-1]=np.sum(LastYearTransactions[LastYearTransactions['Account_Number']==i]['Balance'])
 
 #If the time of the transactions is less than one year, make adjstment to annual savings    
@@ -86,5 +86,17 @@ print('Net_Annual_Savings',Net_Annual_Savings)
 print('Annual Salary',Annual_Salary)
 print('Rent',Rent)
     
-        
+#%% 
+#Time Increasing Functions
+def FinancialGrowth(F_Metric,YearsPredic):
+    WageGrowthRate=0.01
+    PredSalaries=np.zeros((YearsPredic,1),dtype='double')
+    PredSalaries[0]=F_Metric
+    for k in range(1,YearsPredic):
+        PredSalaries[k]=PredSalaries[k-1]*(1+WageGrowthRate)
+    return PredSalaries        
 
+def CumSavings(InitialSavings,PredictedSavings):
+    #Length=np.shape(PredictedSavings)[0]
+    CumSavings=InitialSavings + np.sum(PredictedSavings)
+    return CumSavings
