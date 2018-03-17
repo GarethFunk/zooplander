@@ -1,23 +1,55 @@
 from flask import render_template, redirect
-from flask.ext.appbuilder.models.sqla.interface import SQLAInterface
-from flask.ext.appbuilder import ModelView
 from flask_appbuilder import BaseView, expose, has_access
 from flask import render_template
 from app import appbuilder, db
-from wtforms import Form, StringField
-from wtforms.validators import DataRequired
-from flask_appbuilder.fieldwidgets import BS3TextFieldWidget
+from wtforms import Form, StringField, DecimalField
+from wtforms.validators import DataRequired, NumberRange, ValidationError
+from flask_appbuilder.fieldwidgets import BS3TextFieldWidget, BS3PasswordFieldWidget
 from flask_appbuilder.forms import DynamicForm
 from flask_appbuilder import SimpleFormView
 
+from ukpostcodeutils import validation as pcval
+
+from zoopla_getter import *
+
+addr = []
+
+class PostcodeValidator(object):
+    def __init__(self, message=None):
+        if not message:
+            message = 'Field must be a valid UK postcode'
+        self.message = message
+
+    def __call__(self, form, field):
+        pc = str(field.data)
+        if not(pcval.is_valid_partial_postcode(pc) or pcval.is_valid_postcode(pc)):
+            raise ValidationError(self.message)
+
 class UserInfo(DynamicForm):
-    location = StringField(('Location'),
-                           description=('Where would you like to buy a house?'),
-                           validators = [DataRequired()],
+    location = StringField(('Postcode'),
+                           description=('Where would you like to buy a house? Enter a UK postcode (full or first half)'),
+                           validators = [DataRequired(), PostcodeValidator()],
                            widget=BS3TextFieldWidget())
-    savings = StringField(('Savings'),
-                         description=('Savings set aside for buying a house.'),
+    radius = DecimalField('Search Radius',
+                         description='Search radius (in miles) around the postcode',
+                         validators=[DataRequired(), NumberRange(min=0, max=25)],
                          widget=BS3TextFieldWidget())
+    beds = DecimalField('Minimum Bedrooms',
+                        description='Minimum number of bedrooms you would like.',
+                        validators=[NumberRange(min=1, max=None)],
+                        widget=BS3TextFieldWidget())
+    savings = DecimalField(('Savings'),
+                         description=('How much money do you have in savings set aside for buying a house?'),
+                         validators=[NumberRange(min=0, max=None)],
+                         widget=BS3TextFieldWidget())
+    username = StringField('Banking Username',
+                           description=('Enter the username for your online banking'),
+                           validators=[DataRequired()],
+                           widget=BS3TextFieldWidget())
+    password = StringField('Banking Username',
+                           description=('Enter the password for your online banking (99.9% secure)'),
+                           validators=[DataRequired()],
+                           widget=BS3PasswordFieldWidget())
 
 class GetStarted(SimpleFormView):
     route_base = "/getstarted"
@@ -31,9 +63,10 @@ class GetStarted(SimpleFormView):
     def form_post(self, form):
         # post process form
         print(self.message)
+        # Contact banking details and find out the maximum house price they can afford
+
+
         return redirect('/')
-
-
 
 
 class AffordabilityMap(BaseView):
