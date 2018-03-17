@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, redirect
 from flask.ext.appbuilder.models.sqla.interface import SQLAInterface
 from flask.ext.appbuilder import ModelView
 from flask_appbuilder import BaseView, expose, has_access
@@ -10,55 +10,49 @@ from flask_appbuilder.fieldwidgets import BS3TextFieldWidget
 from flask_appbuilder.forms import DynamicForm
 from flask_appbuilder import SimpleFormView
 
-class MyForm(DynamicForm):
-    field1 = StringField(('Field1'),
-        description=('Your field number one!'),
-        validators = [DataRequired()], widget=BS3TextFieldWidget())
-    field2 = StringField(('Field2'),
-        description=('Your field number two!'), widget=BS3TextFieldWidget())
+class UserInfo(DynamicForm):
+    location = StringField(('Location'),
+                           description=('Where would you like to buy a house?'),
+                           validators = [DataRequired()],
+                           widget=BS3TextFieldWidget())
+    savings = StringField(('Savings'),
+                         description=('Savings set aside for buying a house.'),
+                         widget=BS3TextFieldWidget())
 
 class GetStarted(SimpleFormView):
-    form = MyForm
-    form_title = 'This is my first form view'
-    message = 'My form submitted'
+    route_base = "/getstarted"
+    form = UserInfo
+    form_title = 'Customer Information'
+    message = 'Form submitted!'
 
     def form_get(self, form):
-        form.field1.data = 'This was prefilled'
+        return
 
     def form_post(self, form):
         # post process form
         print(self.message)
+        return redirect('/')
 
-appbuilder.add_view(GetStarted, "Get Started", icon="fa-rocket", label=('Get Started'))
 
 
-class MyView(BaseView):
-    route_base = "/myview"
 
-    @expose('/method1/<string:param1>')
-    def method1(self, param1):
-        # do something with param1
-        # and return it
-        return param1
+class AffordabilityMap(BaseView):
+    route_base = ""
 
-    @expose('/method2/<string:param1>')
-    def method2(self, param1):
-        # do something with param1
-        # and render it
-        param1 = 'Hello %s' % (param1)
-        return param1
-
-    @expose('/method3/<string:param1>')
-    def method3(self, param1):
+    @expose('/map')
+    def domap(self):
         # do something with param1
         # and render template with param
-        param1 = 'Goodbye %s' % (param1)
+        f = open("app/mapsapikey.txt", "r")
+        mapsapikey = f.read()
+        f.close()
         self.update_redirect()
-        return self.render_template('test.html',
-                                    param1=param1)
+        return self.render_template('map.html', title="Affordablity Map", apikey=mapsapikey)
 
-appbuilder.add_view_no_menu(MyView())
-appbuilder.add_link("Method3", href='/myview/test/john', category='My View')
+
+appbuilder.add_view_no_menu(AffordabilityMap())
+appbuilder.add_view(GetStarted, "Get Started", icon="fa-rocket", label=('Get Started'))
+appbuilder.add_link("Affordability Map", "/map", icon="fa-map-o", label=('Affordability Map'))
 
 """
     Application wide 404 error handler
