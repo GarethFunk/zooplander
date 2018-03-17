@@ -116,7 +116,7 @@ def createUser(fname, lname, email, username, password):
 #  Other good customer "6305f52920675d92abc4ff8b75abd54808af74896fdf3cf0a8e841a22b35b565"
 #"ac2dba02645cdd5ebf747a6d0fc9be700cd34c93d6165a92dddfc0ad50a647ad"
 
-def get_transactions():
+def _get_transactions():
     post_data = {
             "query": {"match":
                 {
@@ -135,6 +135,8 @@ def get_transactions():
     response = requests.post(u"{0}/obp/v3.0.0/search/warehouse/customer_transactions".format(BASE_URL), json=post_data,
                              headers=mergeHeaders(DL_TOKEN, CONTENT_JSON))
     return response.json()
+
+
 
 # Get all user's private accounts
 def getPrivateAccounts(bank):
