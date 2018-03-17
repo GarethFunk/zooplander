@@ -19,7 +19,7 @@ obp.login(USERNAME, PASSWORD, CONSUMER_KEY)
 
 def get_transactions():
 
-    transactions = obp._get_transactions()
+    transactions = obp.get_santander_transactions()
     transactions = transactions['json']['hits']['hits']
 
     transactions_dataframe = pd.DataFrame(columns=['Date', 'Amount', 'Currency', 'Description'])
