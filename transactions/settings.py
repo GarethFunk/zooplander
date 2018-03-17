@@ -2,8 +2,8 @@
 
 OUR_BANK     = 'santander.01.uk.sanuk'
 
-USERNAME     = 'Emma.Uk.01'
-PASSWORD     = 'X!fcfe91c5'
+USERNAME     = 'Robert.Uk.01'
+PASSWORD     = 'X!7ba87540'
 CONSUMER_KEY = 'lrswrw4jscchiaohpoebwks3mw15wpnujiz4e22x'
 
 # API server URL https://apisandbox.openbankproject.com
