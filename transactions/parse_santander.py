@@ -19,19 +19,20 @@ account = accounts[0]['id']
 transactions = obp.get_transactions()
 transactions = transactions['json']['hits']['hits']
 
-transactions_dataframe = pd.DataFrame(columns=['Date', 'Amount', 'Debit/Credit', 'Currency', 'Description'])
+transactions_dataframe = pd.DataFrame(columns=['Date', 'Amount', 'Currency', 'Description'])
 
 for transaction in transactions:
     transaction = transaction['_source']
+    if transaction['debit_credit'] == 'Credit':
+        transaction['amount'] = 0 - float(transaction['amount'])
     transactions_temp = pd.DataFrame({
         'Date': transaction['posted_date'],
         'Amount': transaction['amount'],
-        'Debit/Credit': transaction['debit_credit'],
+#        'Debit/Credit': transaction['debit_credit'],
         'Currency': transaction['currency'],
         'Description': transaction['description']}, index=[0])
-    transactions_dataframe = pd.concat([transactions_dataframe, transactions_temp], axis=0)
 
-transactions_dataframe.reset_index()
+    transactions_dataframe = pd.concat([transactions_dataframe, transactions_temp], axis=0)
 
 print(transactions_dataframe)
 
