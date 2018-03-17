@@ -76,16 +76,20 @@ def find_houses(annual_income, postcode, radius, n_beds, multiplier=4.5):
         'maximum_price' : annual_income * multiplier,
         'listing_status': 'sale'})
     houses = []
+    search_loc_geocode = gmaps.geocode(str(postcode) + " UK")
+    search_loc = {"lat": search_loc_geocode[0]['geometry']['location']['lat'],
+                  "lng": search_loc_geocode[0]['geometry']['location']['lng']}
     for result in search.listing:
         #print(result.price)
         #print(result.displayable_address)
         geocode_result = gmaps.geocode(str(result.displayable_address))
         if len(geocode_result) > 0:
-            houses.append((str(result.displayable_address), float(result.price),
-                           float(geocode_result[0]['geometry']['location']['lat']),
-                           float(geocode_result[0]['geometry']['location']['lng'])))
+            houses.append({'addr':str(result.displayable_address),
+                           'price':float(result.price),
+                           'lat':float(geocode_result[0]['geometry']['location']['lat']),
+                           'lng':float(geocode_result[0]['geometry']['location']['lng'])})
         #print(result.image_url)
-    return houses, search
+    return houses, search, search_loc
 
 
 def get_mortgage(monthly_mortgage, deposit, house_price, term_in_years):

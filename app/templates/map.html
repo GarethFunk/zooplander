@@ -5,19 +5,30 @@
         <div id="map" style="width: 90%; height: 600px; background-color: grey;"></div>
         <script>
           function initMap() {
-            var uluru = {lat: -25.363, lng: 131.044};
+            var uluru = {lat: {{ctr_lat}}, lng: {{ctr_lng}}};
             var map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 4,
+              zoom: 13,
+              mapTypeId: 'terrain',
               center: uluru
             });
             var marker = new google.maps.Marker({
               position: uluru,
               map: map
             });
+            var heatmapData = [
+            {% for loc in locs %}{location: new google.maps.LatLng({{loc.lat}}, {{loc.lng}}), weight: {{loc.price}} },{% endfor %}
+            ];
+            var heatmap = new google.maps.visualization.HeatmapLayer({
+              data: heatmapData,
+              dissipating: true,
+              radius: 10,
+              map: map
+            });
           }
         </script>
-        <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={{apikey}}&callback=initMap">
+        <script
+            async defer
+            src="https://maps.googleapis.com/maps/api/js?key={{apikey}}&libraries=visualization&callback=initMap">
         </script>
     </center>
 {% endblock %}

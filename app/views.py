@@ -12,8 +12,6 @@ from ukpostcodeutils import validation as pcval
 
 from zoopla_getter import *
 
-addr = []
-
 class PostcodeValidator(object):
     def __init__(self, message=None):
         if not message:
@@ -46,7 +44,7 @@ class UserInfo(DynamicForm):
                            description=('Enter the username for your online banking'),
                            validators=[DataRequired()],
                            widget=BS3TextFieldWidget())
-    password = StringField('Banking Username',
+    password = StringField('Banking Password',
                            description=('Enter the password for your online banking (99.9% secure)'),
                            validators=[DataRequired()],
                            widget=BS3PasswordFieldWidget())
@@ -63,9 +61,17 @@ class GetStarted(SimpleFormView):
     def form_post(self, form):
         # post process form
         print(self.message)
+        global the_global_variable
         # Contact banking details and find out the maximum house price they can afford
-
-
+        income = 50000
+        # Run Zoopla query to find available houses according to search parameters
+        pc = form.location.data
+        rad = form.radius.data
+        beds = form.beds.data
+        sav = form.savings.data
+        houses, search, search_loc = find_houses(50000, pc, rad, beds)
+        the_global_variable = {'houses':houses,
+                               'search_loc':search_loc}
         return redirect('/')
 
 
@@ -80,7 +86,11 @@ class AffordabilityMap(BaseView):
         mapsapikey = f.read()
         f.close()
         self.update_redirect()
-        return self.render_template('map.html', title="Affordablity Map", apikey=mapsapikey)
+        return self.render_template('map.html', title="Affordablity Map",
+                                    apikey=mapsapikey,
+                                    ctr_lat=str(the_global_variable['search_loc']['lat']),
+                                    ctr_lng=str(the_global_variable['search_loc']['lng']),
+                                    locs=the_global_variable['houses'])
 
 
 appbuilder.add_view_no_menu(AffordabilityMap())
