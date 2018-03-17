@@ -34,6 +34,7 @@ def get_historic_prices(outcode):
         if len(num2) > 0:
             num2[-1] = num2[-1].split('/')[-1].replace('-', ' ')
             averages.append(_calc_historic_averages(num2))
+
     averages = np.array(averages)
     print(averages[0, 0, :], np.nanmean(averages, axis=0)[1])
 
@@ -55,8 +56,8 @@ def _calc_historic_averages(last_years_list):
     return np.vstack((years, prices))
 
 
-get_historic_prices('W12')
-#_calc_historic_averages([1,2,3,4,5,6,7,8, 9])
+#get_historic_prices('W12')
+print(_calc_historic_averages([0]))
 #print(zoopla.area_value_graphs({'postcode': 'w12', 'output_type': 'outcode',
 #                                'size'    : 'large'}))
 
@@ -105,5 +106,5 @@ def get_stamp_duty(property_price, first_time_buyer=True):
             # properties
 
 
-if __name__ == '__main__':
-    find_houses(50000, 'CB4', 10, 2)
+#if __name__ == '__main__':
+#    find_houses(50000, 'CB4', 10, 2)
