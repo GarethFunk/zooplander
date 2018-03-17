@@ -2,6 +2,8 @@ import requests
 import lib.obp
 from settings import *
 import pandas as pd
+from datetime import datetime
+
 
 obp = lib.obp
 
@@ -28,8 +30,10 @@ def get_transactions():
         transaction = transaction['_source']
         if transaction['debit_credit'] == 'Credit':
             transaction['amount'] = 0 - float(transaction['amount'])
+        transaction['posted_date'] = datetime.strptime(transaction['posted_date'], '%Y-%m-%d')
         transactions_temp = pd.DataFrame({
             'Date': transaction['posted_date'],
+
             'Amount': transaction['amount'],
             'Currency': transaction['currency'],
             'Description': transaction['description']}, index=[0])

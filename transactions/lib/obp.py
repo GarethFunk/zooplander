@@ -136,7 +136,9 @@ def _get_transactions():
                              headers=mergeHeaders(DL_TOKEN, CONTENT_JSON))
     return response.json()
 
-
+def get_bank_services(bank):
+    response = requests.get(u"{0}/obp/{1}/banks/{2}/products".format(BASE_URL, API_VERSION, bank), headers=mergeHeaders(DL_TOKEN, CONTENT_JSON))
+    return response.json()['products']
 
 # Get all user's private accounts
 def getPrivateAccounts(bank):
