@@ -1,11 +1,9 @@
 import requests
-import lib.obp
+import obp
 from settings import *
 import pandas as pd
 from datetime import datetime
 
-
-obp = lib.obp
 
 obp.setBaseUrl(BASE_URL)
 obp.setApiVersion(API_VERSION)
@@ -33,7 +31,6 @@ def get_transactions():
         transaction['posted_date'] = datetime.strptime(transaction['posted_date'], '%Y-%m-%d')
         transactions_temp = pd.DataFrame({
             'Date': transaction['posted_date'],
-
             'Amount': transaction['amount'],
             'Currency': transaction['currency'],
             'Description': transaction['description']}, index=[0])
