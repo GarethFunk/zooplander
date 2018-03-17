@@ -9,7 +9,8 @@ zoopla = Zoopla(api_key='hmzgmvxhz4p9feptarrjchy7')
 #print(zoopla.area_value_graphs({'postcode': 'w12', 'output_type': 'outcode',
 #                                'size'    : 'large'}))
 
-
+print(zoopla.average_sold_prices({'postcode'  : 'w12', 'output_type':
+    'outcode', 'area_type' : 'postcodes'}))
 def find_houses(annual_income, postcode, radius, n_beds, multiplier=4.5):
     search = zoopla.property_listings({
         'postcode'      : postcode,
@@ -19,13 +20,13 @@ def find_houses(annual_income, postcode, radius, n_beds, multiplier=4.5):
         'page_size'     : 100,
         'maximum_price' : annual_income * multiplier,
         'listing_status': 'sale'})
-    addresses = []
+    houses = []
     for result in search.listing:
         #print(result.price)
         #print(result.displayable_address)
-        addresses.append(str(result.displayable_address))
+        houses.append((str(result.displayable_address), float(result.price)))
         #print(result.image_url)
-    return addresses, search
+    return houses, search
 
 
 def get_mortgage(monthly_mortgage, deposit, house_price, term_in_years):
@@ -46,5 +47,5 @@ def get_stamp_duty(property_price, first_time_buyer=True):
             # properties
 
 
-if __name__ == '__main__':
-    find_houses(50000, 'w12', 10, 2)
+#if __name__ == '__main__':
+#    find_houses(50000, 'w12', 10, 2)
