@@ -10,8 +10,7 @@ zoopla = Zoopla(api_key='hmzgmvxhz4p9feptarrjchy7')
 #                                'size'    : 'large'}))
 
 
-def find_houses(monthly, deposit, annual_income, postcode,
-                radius, n_beds, multiplier=4.5):
+def find_houses(annual_income, postcode, radius, n_beds, multiplier=4.5):
     search = zoopla.property_listings({
         'postcode'      : postcode,
         'radius'        : radius,
@@ -20,11 +19,19 @@ def find_houses(monthly, deposit, annual_income, postcode,
         'page_size'     : 100,
         'maximum_price' : annual_income * multiplier,
         'listing_status': 'sale'})
+    addresses = []
     for result in search.listing:
-        print(result.price)
-        print(result.displayable_address)
-        print(result.image_url)
-    return search
+        #print(result.price)
+        #print(result.displayable_address)
+        addresses.append(str(result.displayable_address))
+        #print(result.image_url)
+    return addresses, search
+
+
+def get_mortgage(monthly_mortgage, deposit, house_price, term_in_years):
+    # get available mortgages for a specific houser with a given price -
+    # redirect to moneysupermarket.
+    return
 
 
 def get_stamp_duty(property_price, first_time_buyer=True):
@@ -38,4 +45,6 @@ def get_stamp_duty(property_price, first_time_buyer=True):
             # need additional stamp duty sophistication for more expensive
             # properties
 
-find_houses(10,200, 50000, 'w12', 10, 2)
+
+if __name__ == '__main__':
+    find_houses(50000, 'w12', 10, 2)
