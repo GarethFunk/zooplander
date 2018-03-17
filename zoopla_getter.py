@@ -1,10 +1,12 @@
 from zoopla import Zoopla
+import googlemaps
 import urllib.request as rq
 import re
 import datetime
 import numpy as np
 
 zoopla = Zoopla(api_key='hmzgmvxhz4p9feptarrjchy7')
+gmaps = googlemaps.Client(key='AIzaSyD_PKC4yi-1Dh4qRcJkrda9Y8ZyFhyjKfw')
 
 
 def get_historic_prices(outcode):
@@ -64,6 +66,7 @@ get_historic_prices('W12')
 
 
 def find_houses(annual_income, postcode, radius, n_beds, multiplier=4.5):
+
     search = zoopla.property_listings({
         'postcode'      : postcode,
         'radius'        : radius,
@@ -75,7 +78,11 @@ def find_houses(annual_income, postcode, radius, n_beds, multiplier=4.5):
     for result in search.listing:
         #print(result.price)
         #print(result.displayable_address)
-        houses.append((str(result.displayable_address), float(result.price)))
+        geocode_result = gmaps.geocode(str(result.displayable_address))
+        if len(geocode_result) > 0:
+            houses.append((str(result.displayable_address), float(result.price),
+                           float(geocode_result[0]['geometry']['location']['lat']),
+                           float(geocode_result[0]['geometry']['location']['lng'])))
         #print(result.image_url)
     return houses, search
 
@@ -98,5 +105,5 @@ def get_stamp_duty(property_price, first_time_buyer=True):
             # properties
 
 
-#if __name__ == '__main__':
-#    print(find_houses(50000, 'w12', 10, 2))
+if __name__ == '__main__':
+    find_houses(50000, 'CB4', 10, 2)
