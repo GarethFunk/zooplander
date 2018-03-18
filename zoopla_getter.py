@@ -15,7 +15,7 @@ gmaps = googlemaps.Client(key='AIzaSyD_PKC4yi-1Dh4qRcJkrda9Y8ZyFhyjKfw')
 def get_historic_prices(outcode):
     content = rq.urlopen('http://api.zoopla.co.uk/api/v1/average_sold_prices.xml'
                          '?postcode={}&output_type=outcode&area_type=postcodes'
-                         '&page_size=20&api_key=hmzgmvxhz4p9feptarrjchy7'.format(
+                         '&page_size=20&api_key=hpajqvsb7a83dwnqf624eavz'.format(
         outcode)).read()
     splitten = str(content).split('<areas')
     averages = []
