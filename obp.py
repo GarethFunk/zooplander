@@ -120,7 +120,7 @@ def get_santander_transactions():
     post_data = {
             "query": {"match":
                 {
-                    "contract_contract_id": "ac2dba02645cdd5ebf747a6d0fc9be700cd34c93d6165a92dddfc0ad50a647ad"
+                    "contract_contract_id": "6305f52920675d92abc4ff8b75abd54808af74896fdf3cf0a8e841a22b35b565"
                 }
             },
             "sort": [

@@ -11,6 +11,8 @@ from flask_appbuilder import SimpleFormView
 from ukpostcodeutils import validation as pcval
 
 from zoopla_getter import *
+from lowest_level import *
+from mortgage_data import *
 
 
 class PostcodeValidator(object):
@@ -64,18 +66,20 @@ class GetStarted(SimpleFormView):
         print(self.message)
         global the_global_variable
         # Contact banking details and find out the maximum house price they can afford
-        global annual_income
-        #income = annual_income
+
         # Run Zoopla query to find available houses according to search parameters
-        pc = form.location.data
-        rad = form.radius.data
-        beds = form.beds.data
-        sav = form.savings.data
+        pc = str(form.location.data)
+        rad = str(form.radius.data)
+        beds = str(form.beds.data)
+        sav = float(form.savings.data)
         houses, search, search_loc = find_houses(1000000, pc, rad, beds) # GET ALL HOUSES
         for i in range(len(houses)):
             # Calculate how long many years it will take to buy this house
-            n = 1 # Num years to buy this house
-            houses[i].update({'year':n})
+            n = time_to_afford(pred_10y_prices(pc, sav, houses[i]['price']))
+            if n is not None:
+                houses[i].update({'year':n-2018})
+            else:
+                houses[i].update({'year':15})
         the_global_variable = {'houses':houses,
                                'search_loc':search_loc}
         return redirect('/map')

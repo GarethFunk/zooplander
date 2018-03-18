@@ -8,4 +8,4 @@ with open('globals.txt', 'w') as outfile:
     json.dump({'annual_deposit': annual_deposit,
                'annual_income': annual_income, 'rent': rent}, outfile)
 
-app.run(host='127.0.0.1', port=8080, debug=True)
+app.run(host='127.0.0.1', port=8080, debug=True, use_reloader=False)
