@@ -1,15 +1,5 @@
-Base Skeleton to start your application using Flask-AppBuilder
+Give it a go!
 --------------------------------------------------------------
 
-- Install it::
-
-	pip install flask-appbuilder
-	git clone https://github.com/dpgaspar/Flask-AppBuilder-Skeleton.git
-
-- Run it::
-
-	fabmanager run
-
-
-That's it!!
+We enjoyed the hackathon!
 
