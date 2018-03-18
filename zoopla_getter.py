@@ -8,7 +8,7 @@ import Financial_Data_Proc as fin
 import lowest_level as lol
 
 
-zoopla = Zoopla(api_key='hmzgmvxhz4p9feptarrjchy7')
+zoopla = Zoopla(api_key='hpajqvsb7a83dwnqf624eavz')
 gmaps = googlemaps.Client(key='AIzaSyD_PKC4yi-1Dh4qRcJkrda9Y8ZyFhyjKfw')
 
 
