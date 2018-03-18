@@ -55,8 +55,8 @@ def string_summary(ranked_loans):
 if __name__ == '__main__':
     mortgages = get_mortgages('mortgages_20%_200000.csv')
     ranked = return_ranked_loans(250000, 25000, 1000, mortgages)
-    #prediction = pred_10y_prices('W12', 10000, 250000) #postcode, annual_saving, house_price now
-    prediction = ([2016,2017], [10000.0, 11000.0], [20000.0, 21000.0])
+    prediction = pred_10y_prices('W12', 10000, 250000) #postcode, annual_saving, house_price now
+    #prediction = ([2016,2017], [10000.0, 11000.0], [20000.0, 21000.0])
 
     rent = 1000
 
@@ -70,6 +70,6 @@ if __name__ == '__main__':
         print(string_summary)
 
     else:
-        print("You're poor")
+        print("")
 
 
