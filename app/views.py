@@ -73,7 +73,7 @@ class GetStarted(SimpleFormView):
         houses, search, search_loc = find_houses(income, pc, rad, beds)
         the_global_variable = {'houses':houses,
                                'search_loc':search_loc}
-        return redirect('/')
+        return redirect('/map')
 
 
 class AffordabilityMap(BaseView):
