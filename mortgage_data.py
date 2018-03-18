@@ -25,8 +25,12 @@ def return_ranked_loans(house_value, deposit, rent, mortgages):
 
     return returned_mortgages
 
+def time_to_afford(time_projectedDeposit_house_price):
+
+
 
 if __name__ == '__main__':
     mortgages = get_mortgages('mortgages_20%_200000.csv')
     ranked = return_ranked_loans(250000, 25000, 1000, mortgages)
     print(ranked)
+
