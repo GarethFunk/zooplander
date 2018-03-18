@@ -45,12 +45,18 @@ def time_to_afford(time_projected):
     else:
         return year[0]
 
+def string_summary(ranked_loans):
+    return print(ranked_loans['Mortgages available'] + ', ' + ranked_loans['Maximum loan to value'] +
+                 " Loan to Value," + " Average APR for a 25 Year Term: " + ranked_loans['The overall cost for comparison is (APR)'] +
+                ", Monthly Repayment " + ranked_loans['Monthly cost'] +
+                 ". Additional Benefits include " + ranked_loans['Additional benefits'] + ".")
+
 
 if __name__ == '__main__':
     mortgages = get_mortgages('mortgages_20%_200000.csv')
     ranked = return_ranked_loans(250000, 25000, 1000, mortgages)
-    prediction = pred_10y_prices('W12', 10000, 250000) #postcode, annual_saving, house_price now
-    #tuple_thing = ([2016,2017], [10000.0, 11000.0], [20000.0, 21000.0])
+    #prediction = pred_10y_prices('W12', 10000, 250000) #postcode, annual_saving, house_price now
+    prediction = ([2016,2017], [10000.0, 11000.0], [20000.0, 21000.0])
 
     rent = 1000
 
@@ -59,7 +65,9 @@ if __name__ == '__main__':
         print(year_to_afford)
         deposit, house_price = get_right_year_nums(prediction, time_to_afford(prediction))
         ranked = return_ranked_loans(house_price, deposit, rent, mortgages)
-        print(ranked)
+        print(ranked.iloc[0])
+        string_summary(ranked.iloc[0])
+        print(string_summary)
 
     else:
         print("You're poor")
