@@ -5,6 +5,7 @@ import re
 import datetime
 import numpy as np
 
+
 zoopla = Zoopla(api_key='hmzgmvxhz4p9feptarrjchy7')
 gmaps = googlemaps.Client(key='AIzaSyD_PKC4yi-1Dh4qRcJkrda9Y8ZyFhyjKfw')
 
@@ -57,7 +58,7 @@ def _calc_historic_averages(last_years_list):
 
 
 #get_historic_prices('W12')
-print(_calc_historic_averages([0]))
+#print(_calc_historic_averages([0]))
 #print(zoopla.area_value_graphs({'postcode': 'w12', 'output_type': 'outcode',
 #                                'size'    : 'large'}))
 
