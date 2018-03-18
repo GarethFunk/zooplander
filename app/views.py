@@ -81,7 +81,8 @@ class GetStarted(SimpleFormView):
             else:
                 houses[i].update({'year':15})
         the_global_variable = {'houses':houses,
-                               'search_loc':search_loc}
+                               'search_loc':search_loc,
+                               'pc':pc}
         return redirect('/map')
 
 
@@ -95,12 +96,32 @@ class AffordabilityMap(BaseView):
         f = open("app/mapsapikey.txt", "r")
         mapsapikey = f.read()
         f.close()
+        mortgages = get_mortgages('mortgages_20%_200000.csv')
+        rent = 1000
+        prediction = pred_10y_prices(the_global_variable['pc'],
+                                     10000,
+                                     the_global_variable['houses'][0]['price'])  # postcode, annual_saving, house_price now
+        print(the_global_variable['houses'][0]['price'])
+        print(the_global_variable['pc'])
+        # prediction = ([2016,2017], [10000.0, 11000.0], [20000.0, 21000.0])
+        year_to_afford = time_to_afford(prediction)
+        if year_to_afford is not None:
+            print(year_to_afford)
+            deposit, house_price = get_right_year_nums(prediction, time_to_afford(prediction))
+            ranked = return_ranked_loans(house_price, deposit, rent, mortgages)
+            print(ranked.iloc[0])
+            string_summary(ranked.iloc[0])
+            mort_offer = (string_summary)
+
+        else:
+            mort_offer = ("Sorry, we don't have any mortgages suitable for you at the moment.")
         self.update_redirect()
         return self.render_template('map.html', title="Affordability Map",
                                     apikey=mapsapikey,
                                     ctr_lat=str(the_global_variable['search_loc']['lat']),
                                     ctr_lng=str(the_global_variable['search_loc']['lng']),
-                                    locs=the_global_variable['houses'])
+                                    locs=the_global_variable['houses'],
+                                    mort_offer=mort_offer)
 
 
 appbuilder.add_view_no_menu(AffordabilityMap())
