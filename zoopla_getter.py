@@ -37,7 +37,7 @@ def get_historic_prices(outcode):
             averages.append(_calc_historic_averages(num2))
 
     averages = np.array(averages)
-    print(averages[0, 0, :], np.nanmean(averages, axis=0)[1])
+    return averages[0, 0, :], np.nanmean(averages, axis=0)[1]
 
     #houses = np.array(houses)
     #print(houses)
@@ -57,7 +57,13 @@ def _calc_historic_averages(last_years_list):
     return np.vstack((years, prices))
 
 
-#get_historic_prices('W12')
+def pred_10y_prices(outcode):
+    years, prices = get_historic_prices(outcode)
+    coeffs = np.polyfit(years, prices, 1)
+    fore_years = np.arange(2018, 2029, 1)
+    preds = coeffs[0]*fore_years + coeffs[1]
+    return fore_years, preds
+
 #print(_calc_historic_averages([0]))
 #print(zoopla.area_value_graphs({'postcode': 'w12', 'output_type': 'outcode',
 #                                'size'    : 'large'}))
