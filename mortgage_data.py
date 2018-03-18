@@ -5,5 +5,5 @@ def get_mortgages(file):
     return mortgages
 
 if __name__ == '__main__':
-    mortgages = get_mortgages('mortgages.csv')
+    mortgages = get_mortgages('mortgages_20%_200000.csv')
     print(mortgages)
