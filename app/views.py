@@ -70,7 +70,11 @@ class GetStarted(SimpleFormView):
         rad = form.radius.data
         beds = form.beds.data
         sav = form.savings.data
-        houses, search, search_loc = find_houses(income, pc, rad, beds)
+        houses, search, search_loc = find_houses(1000000, pc, rad, beds) # GET ALL HOUSES
+        for i in range(len(houses)):
+            # Calculate how long many years it will take to buy this house
+            n = 1 # Num years to buy this house
+            houses[i].update({'year':n})
         the_global_variable = {'houses':houses,
                                'search_loc':search_loc}
         return redirect('/map')
