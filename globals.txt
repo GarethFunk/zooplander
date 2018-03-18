@@ -1,1 +1,1 @@
-{"annual_deposit": 5000, "annual_income": 30000, "rent": 1000}
+{"annual_deposit": 565.769836956522, "annual_income": 6480.0, "rent": 400.0}

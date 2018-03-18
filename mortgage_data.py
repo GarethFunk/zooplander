@@ -26,6 +26,7 @@ def return_ranked_loans(house_value, deposit, rent, mortgages):
 
     return returned_mortgages
 
+
 def time_to_afford(time_projected):
     #which year will annual_deposit be more than 10%, house_price
     year = []
@@ -33,6 +34,7 @@ def time_to_afford(time_projected):
         if time_projected[1]/time_projected[2] > 0.1:
             year.append(time_projected[0])
     return year[0]
+
 
 if __name__ == '__main__':
     mortgages = get_mortgages('mortgages_20%_200000.csv')

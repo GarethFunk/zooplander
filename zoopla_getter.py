@@ -18,7 +18,6 @@ def get_historic_prices(outcode):
                          '&page_size=20&api_key=hmzgmvxhz4p9feptarrjchy7'.format(
         outcode)).read()
     splitten = str(content).split('<areas')
-    houses = []
     averages = []
     for house in splitten:
         split_newline = house.split(r'\n')
@@ -69,15 +68,6 @@ def pred_10y_prices(outcode, initial_savings, current_house_price):
     preds = (coeffs[0]*fore_years + coeffs[1])*current_house_price/prices[0]
     return fore_years, deposits, preds
 
-#pred_10y_prices('w12',10000,100000)
-
-#print(_calc_historic_averages([0]))
-#print(zoopla.area_value_graphs({'postcode': 'w12', 'output_type': 'outcode',
-#                                'size'    : 'large'}))
-
-#areas = zoopla.average_sold_prices({'postcode'  : 'W12', 'output_type':
-#    'outcode', 'area_type' : 'postcodes'})
-#print(areas)
 
 
 def find_houses(annual_income, postcode, radius, n_beds, multiplier=4.5):
@@ -123,6 +113,3 @@ def get_stamp_duty(property_price, first_time_buyer=True):
             # need additional stamp duty sophistication for more expensive
             # properties
 
-
-#if __name__ == '__main__':
-#    find_houses(50000, 'CB4', 10, 2)
