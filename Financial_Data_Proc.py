@@ -8,7 +8,7 @@ import parse_santander as ps
 import pandas as pd
 import numpy as np
 import datetime as dt
-import matplotlib.pyplot as plt
+
 ## Takes inputs from Santander API to calculate the possible mortgage repayment rate and total value of the mortgage you can afford
 
 #Inputs - Pandas data table from Emma Index/Date/Money out (-ve if incoming) / Balance / Who / Transaction Type / Account_Number, Savings from UI double
@@ -103,6 +103,9 @@ def CumSavings(InitialSavings,PredictedSavings):
     return CumSavings
 
 def FutureDeposit(Net_Annual_Savings,years):
-    Savings=FinancialGrowth(Net_Annual_Savings,years)
-    DepositValue=np.cumsum(Savings)
-    return DepositValue
+    if years == 0:
+        return Net_Annual_Savings
+    else:
+        Savings=FinancialGrowth(Net_Annual_Savings,years+1)
+        DepositValue=np.cumsum(Savings)
+        return DepositValue[-1]

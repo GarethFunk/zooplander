@@ -63,10 +63,13 @@ def pred_10y_prices(outcode, initial_savings, current_house_price):
     fore_years = np.arange(2018, 2029, 1)
     deposits = []
     for year in fore_years:
-        deposits.append(fin.FutureDeposit(annual_deposit, year) +
-                        initial_savings)
+        year_diff = year - 2018
+        h = fin.FutureDeposit(annual_deposit, year_diff) + initial_savings
+        deposits.append(h)
     preds = (coeffs[0]*fore_years + coeffs[1])*current_house_price/prices[0]
     return fore_years, deposits, preds
+
+#pred_10y_prices('w12',10000,100000)
 
 #print(_calc_historic_averages([0]))
 #print(zoopla.area_value_graphs({'postcode': 'w12', 'output_type': 'outcode',
