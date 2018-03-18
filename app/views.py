@@ -12,6 +12,7 @@ from ukpostcodeutils import validation as pcval
 
 from zoopla_getter import *
 
+
 class PostcodeValidator(object):
     def __init__(self, message=None):
         if not message:

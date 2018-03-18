@@ -5,6 +5,7 @@ import re
 import datetime
 import numpy as np
 import Financial_Data_Proc as fin
+import lowest_level as lol
 
 
 zoopla = Zoopla(api_key='hmzgmvxhz4p9feptarrjchy7')
@@ -57,7 +58,7 @@ def _calc_historic_averages(last_years_list):
 
 def pred_10y_prices(outcode, initial_savings, current_house_price):
     years, prices = get_historic_prices(outcode)
-    global annual_deposit
+    annual_deposit = lol.read_globals()['annual_deposit']
     coeffs = np.polyfit(years, prices, 1)
     fore_years = np.arange(2018, 2029, 1)
     deposits = []
