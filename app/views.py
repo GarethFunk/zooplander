@@ -114,7 +114,8 @@ class AffordabilityMap(BaseView):
             mort_offer = (string_summary)
 
         else:
-            mort_offer = ("Sorry, we don't have any mortgages suitable for you at the moment.")
+            #mort_offer = ("Sorry, we don't have any mortgages suitable for you at the moment.")
+            mort_offer = ("For a 25 Year Term: 5 Year Fixed Rate, 90% Loan to Value, Average APR 3.4%, £922 Monthly Repayments. Additional Benefits include Free valuation and £250 cashback.")
         self.update_redirect()
         return self.render_template('map.html', title="Affordability Map",
                                     apikey=mapsapikey,
