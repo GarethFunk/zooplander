@@ -27,14 +27,15 @@ def return_ranked_loans(house_value, deposit, rent, mortgages):
     return returned_mortgages
 
 def time_to_afford(time_projectedDeposit_house_price, outcode):
-    print(time_projectedDeposit_house_price)
+    #which year will annual_deposit be more than 10%, house_price
+
+    return year
 
 if __name__ == '__main__':
     mortgages = get_mortgages('mortgages_20%_200000.csv')
     ranked = return_ranked_loans(250000, 25000, 1000, mortgages)
-    tuple_thing = pred_10y_prices('W12', 10000)
-    annual_income = 1000
-    annual_deposit = 300
+    #tuple_thing = pred_10y_prices('W12', 10000)
+    tuple_thing = ([2016,2017], [])
     print(time_to_afford(tuple_thing))
     #print(ranked)
 
