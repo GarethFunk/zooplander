@@ -2,12 +2,31 @@
 {% block content %}
     <h1>{{title}}</h1>
     <center>
-        <div id="map" style="width: 90%; height: 600px; background-color: grey;"></div>
+        <table style="width:100%">
+            <tr>
+                <td style="width:75%">
+                    <div id="map" style="width: 90%; height: 600px; background-color: grey;"></div>
+                </td>
+                <td style="vertical-align:top">
+                    <img src="/static/stdr.png" height=150">
+                    <h2>Recommended Products</h2>
+                    <a href="https://www.santander.co.uk/uk/savings" target="_blank">
+                        <img src="/static/piggy-bank.png" height=50">
+                    </a>
+                    <h3>Regular eSaver</h3>
+                    <p>3.00% AER/gross (fixed) for 12 months.</p>
+                    <a href="https://www.santander.co.uk/uk/mortgages" target="_blank">
+                        <img src="/static/home.png" height=50">
+                    </a>
+                    <h3>First Time Mortgages</h3>
+                    <p>5% deposit mortgages available</p>
+                </td>
+            </tr>
         <script>
           function initMap() {
             var uluru = {lat: {{ctr_lat}}, lng: {{ctr_lng}}};
             var map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 13,
+              zoom: 11,
               mapTypeId: 'terrain',
               center: uluru
             });
