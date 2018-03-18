@@ -11,7 +11,6 @@ from flask_appbuilder import SimpleFormView
 from ukpostcodeutils import validation as pcval
 
 from zoopla_getter import *
-import Financial_Data_Proc as fin
 
 class PostcodeValidator(object):
     def __init__(self, message=None):
@@ -64,7 +63,8 @@ class GetStarted(SimpleFormView):
         print(self.message)
         global the_global_variable
         # Contact banking details and find out the maximum house price they can afford
-        income = fin.Analyse_Account()[2]
+        global annual_income
+        income = annual_income
         # Run Zoopla query to find available houses according to search parameters
         pc = form.location.data
         rad = form.radius.data

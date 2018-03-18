@@ -1,4 +1,6 @@
+import Financial_Data_Proc as fin
 the_global_variable = {}
+annual_deposit, annual_income, rent = fin.Analyse_Account()
 
 from app import app
 
