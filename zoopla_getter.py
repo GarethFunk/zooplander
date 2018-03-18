@@ -40,9 +40,6 @@ def get_historic_prices(outcode):
     averages = np.array(averages)
     return averages[0, 0, :], np.nanmean(averages, axis=0)[1]
 
-    #houses = np.array(houses)
-    #print(houses)
-
 
 def _calc_historic_averages(last_years_list):
     now = datetime.datetime.now().year
@@ -58,7 +55,7 @@ def _calc_historic_averages(last_years_list):
     return np.vstack((years, prices))
 
 
-def pred_10y_prices(outcode, initial_savings):
+def pred_10y_prices(outcode, initial_savings, current_house_price):
     years, prices = get_historic_prices(outcode)
     global annual_deposit
     coeffs = np.polyfit(years, prices, 1)
@@ -67,7 +64,7 @@ def pred_10y_prices(outcode, initial_savings):
     for year in fore_years:
         deposits.append(fin.FutureDeposit(annual_deposit, year) +
                         initial_savings)
-    preds = coeffs[0]*fore_years + coeffs[1]
+    preds = (coeffs[0]*fore_years + coeffs[1])*current_house_price/prices[0]
     return fore_years, deposits, preds
 
 #print(_calc_historic_averages([0]))
