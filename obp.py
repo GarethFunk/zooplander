@@ -115,7 +115,10 @@ def createUser(fname, lname, email, username, password):
 
 #  Other good customer "6305f52920675d92abc4ff8b75abd54808af74896fdf3cf0a8e841a22b35b565"
 #"ac2dba02645cdd5ebf747a6d0fc9be700cd34c93d6165a92dddfc0ad50a647ad"
-
+#"fce428e4dc4edac46e3efb00898c6209a414c15d3afc9fd26015b5ff4a092c74"
+#"ea19e748b96e01d8512648a26f06e97fc62638693a367e2a5a830b798ed6b3bc"
+#"34dbe18cdba637223da148d5baa92719dd86808c522d7f533c01ccfc361bc0da"
+#"d3f43a0c6e7d9f426804f5c1d6ec7bff91eece8448884ac7e658f3fe0c187161"
 def get_santander_transactions():
     post_data = {
             "query": {"match":
