@@ -96,7 +96,7 @@ class AffordabilityMap(BaseView):
         mapsapikey = f.read()
         f.close()
         self.update_redirect()
-        return self.render_template('map.html', title="Affordablity Map",
+        return self.render_template('map.html', title="Affordability Map",
                                     apikey=mapsapikey,
                                     ctr_lat=str(the_global_variable['search_loc']['lat']),
                                     ctr_lng=str(the_global_variable['search_loc']['lng']),
