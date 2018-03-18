@@ -26,7 +26,7 @@ def Analyse_Account():
     #Filter last year of data
     df.sort_values(by=['Date'])
     Transactions=df.shape[0]
-    dates=np
+   # dates=np
     #MostRecentDate=df.loc[:,'Date'].iloc[Transactions-1]
     #MostRecentDate=dt.datetime.strptime(MostRecentDate, '%Y-%m-%d')
     MostRecentDate=df['Date'].iloc[Transactions-1]
@@ -88,7 +88,7 @@ def Analyse_Account():
 #%% 
 #Time Increasing Functions
 
-#How your salary or savings are projected to rise, F_metric is the value at t=0
+#How your salary or savings are projected to rise, F_metric is the value
 def FinancialGrowth(F_Metric,YearsPredic):
     WageGrowthRate=0.01
     PredSalaries=np.zeros((YearsPredic,1),dtype='double')
@@ -101,3 +101,8 @@ def CumSavings(InitialSavings,PredictedSavings):
     #Length=np.shape(PredictedSavings)[0]
     CumSavings=InitialSavings + np.sum(PredictedSavings)
     return CumSavings
+
+def FutureDeposit(Net_Annual_Savings,years):
+    Savings=FinancialGrowth(Net_Annual_Savings,years)
+    DepositValue=np.cumsum(Savings)
+    return DepositValue
