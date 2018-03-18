@@ -41,7 +41,7 @@ def time_to_afford(time_projected):
         if time_projected[1][i]/time_projected[2][i] >= 0.1:
             year.append(time_projected[0][i])
     if not year:
-        return print("You cannot afford this house in the next 10 years")
+        return None
     else:
         return year[0]
 
@@ -52,6 +52,7 @@ if __name__ == '__main__':
     tuple_thing = pred_10y_prices('W12', 10000, 250000) #postcode, annual_saving, house_price now
     #tuple_thing = ([2016,2017], [10000.0, 11000.0], [20000.0, 21000.0])
     #print(tuple_thing)
+    deposit1, house_price1 = get_right_year_nums(tuple_thing)
     print(time_to_afford(tuple_thing))
     print(ranked)
     #print(ranked)
