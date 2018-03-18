@@ -4,6 +4,7 @@ import urllib.request as rq
 import re
 import datetime
 import numpy as np
+import Financial_Data_Proc as fin
 
 
 zoopla = Zoopla(api_key='hmzgmvxhz4p9feptarrjchy7')
@@ -57,12 +58,17 @@ def _calc_historic_averages(last_years_list):
     return np.vstack((years, prices))
 
 
-def pred_10y_prices(outcode):
+def pred_10y_prices(outcode, initial_savings):
     years, prices = get_historic_prices(outcode)
+    global annual_deposit
     coeffs = np.polyfit(years, prices, 1)
     fore_years = np.arange(2018, 2029, 1)
+    deposits = []
+    for year in fore_years:
+        deposits.append(fin.FutureDeposit(annual_deposit, year) +
+                        initial_savings)
     preds = coeffs[0]*fore_years + coeffs[1]
-    return fore_years, preds
+    return fore_years, deposits, preds
 
 #print(_calc_historic_averages([0]))
 #print(zoopla.area_value_graphs({'postcode': 'w12', 'output_type': 'outcode',
