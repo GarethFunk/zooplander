@@ -13,6 +13,13 @@ def get_mortgages(file):
     mortgages = pd.read_csv(file, sep = '\t')
     return mortgages
 
+
+def get_right_year_nums(pred_10y_output, correct_year):
+    idx = pred_10y_output[0].index(correct_year) #year list
+    return pred_10y_output[1][idx], pred_10y_output[2][idx] # deposit and
+    # house price in that year
+
+
 def return_ranked_loans(house_value, deposit, rent, mortgages):
     #borrowed = house_value - deposit
     #print((house_value-deposit)*100/house_value)
